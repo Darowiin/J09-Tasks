@@ -104,7 +104,7 @@ public class MoexSecuritiesParser {
      * @param outputDir путь к директории для сохранения файла.
      * @return {@link CompletableFuture}, представляющий асинхронную задачу.
      */
-    private static CompletableFuture<Void> processQueryAsync(HttpClient client, String query, Path outputDir) {
+    static CompletableFuture<Void> processQueryAsync(HttpClient client, String query, Path outputDir) {
         String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
         URI uri = URI.create(BASE_URL + encodedQuery);
 
@@ -135,7 +135,7 @@ public class MoexSecuritiesParser {
      * @return список массивов строк, подготовленных для записи в CSV.
      * @throws RuntimeException если формат JSON некорректен или произошла ошибка парсинга.
      */
-    private static List<String[]> parseSecurities(String jsonBody) {
+    static List<String[]> parseSecurities(String jsonBody) {
         List<String[]> resultRows = new ArrayList<>();
         try {
             JsonNode root = objectMapper.readTree(jsonBody);
