@@ -25,23 +25,24 @@ public class PathDifference {
 
         if (isNotExists(path1, path2)) {
             differences.add(PathDifferenceStatus.NotExists);
-        } else {
-            if (isSameFile(path1, path2)) {
-                differences.add(PathDifferenceStatus.SameFile);
-            }
-            if (isSameDirectory(path1, path2)) {
-                differences.add(PathDifferenceStatus.SameDirectory);
-            }
-            if (Files.isRegularFile(path1) && Files.isRegularFile(path2)) {
-                if (isBiggerFile(path1, path2)) {
-                    differences.add(PathDifferenceStatus.BiggerFile);
-                }
-                if (isSmallerFile(path1, path2)) {
-                    differences.add(PathDifferenceStatus.SmallerFile);
-                }
-                if (isSameSizeFile(path1, path2)) {
-                    differences.add(PathDifferenceStatus.SameSizeFile);
-                }
+            return differences;
+        }
+
+        if (isSameFile(path1, path2)) {
+            differences.add(PathDifferenceStatus.SameFile);
+        }
+
+        if (isSameDirectory(path1, path2)) {
+            differences.add(PathDifferenceStatus.SameDirectory);
+        }
+
+        if (Files.isRegularFile(path1) && Files.isRegularFile(path2)) {
+            if (isBiggerFile(path1, path2)) {
+                differences.add(PathDifferenceStatus.BiggerFile);
+            } else if (isSmallerFile(path1, path2)) {
+                differences.add(PathDifferenceStatus.SmallerFile);
+            } else {
+                differences.add(PathDifferenceStatus.SameSizeFile);
             }
         }
 
@@ -54,10 +55,10 @@ public class PathDifference {
         if (isSameRoot(path1, path2)) {
             differences.add(PathDifferenceStatus.SameRoot);
         }
+
         if (isSubpath(path1, path2)) {
             differences.add(PathDifferenceStatus.Subpath);
-        }
-        if (isParentPath(path1, path2)) {
+        } else if (isParentPath(path1, path2)) {
             differences.add(PathDifferenceStatus.ParentPath);
         }
 
